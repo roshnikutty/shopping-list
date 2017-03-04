@@ -6,15 +6,14 @@ var state = {
 var addItem = function(state, item) {
   return state.items.push(item);
 };
-//console.log(addItem(state));
-
+/*
 var getExistingInfo = function(state) {
 	 $(".shopping-item").each(function() {
   		state.items.push($(this).text());
 	});
   return state.items;
 };
-
+*/
 
 var renderList = function(state, element) {
   var itemsHTML = state.items.map(function(thing) {
@@ -27,27 +26,26 @@ var renderList = function(state, element) {
 $('#js-shopping-list-form').submit(function(event) {
   event.preventDefault();
   event.stopPropagation();
-  //getExistingInfo(state);                         // The existing form info should be pulled in only the first time aan item is added
   addItem(state, $('#shopping-list-entry').val());
   renderList(state, $(".shopping-list"));
   console.log(state);
 });
 
 //deleting item from shopping list
-$(".shopping-item-delete").click(function(event) {
+$(".shopping-list").on("click", ".shopping-item-delete", function(event) {
   event.preventDefault();
   event.stopPropagation();
-  //getExistingInfo(state);
   $(event.target).closest("li").remove();
 });
 
 //crossing off item from shopping list
-$(".shopping-item-toggle").click(function(event) {
+$(".shopping-list").on("click", ".shopping-item-toggle", function(event) {
   event.preventDefault();
   event.stopPropagation();
-  getExistingInfo(state);
-  $(this).closest(".shopping-item").toggleClass(".shopping-item__checked");
-  //console.log($(this).find(".shopping-item").toggleClass(".shopping-item__checked"));
- //console.log($(event.target).find(".shopping-item").text());
- //console.log($(this).closest("span.shopping-item").text());
+  $(this).closest("li").find(".shopping-item").toggleClass("shopping-item__checked");
+  
+  //$(this).closest(".shopping-item-controls").prev(".shopping-item").toggleClass("shopping-item__checked");
+  
 });
+
+$(".shopping-list").empty();
